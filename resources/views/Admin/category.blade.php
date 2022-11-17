@@ -27,12 +27,20 @@
             background-color: #04AA6D;
             color: white;
         }
+
     </style>
 </head>
 <body>
 
 <h1>A Fancy Table</h1>
 <a href="{{route('category.create')}}" class="btn btn-primary" >Add</a>
+<caption>
+    <form>
+        Search
+        <input type="text" name="search" placeholder="Search">
+
+    </form>
+</caption>
 <table id="customers">
     <tr>
         <th>Số thứ tự</th>
@@ -40,9 +48,9 @@
         <th>Slug</th>
         <th>Action</th>
     </tr>
-    @foreach($danhmuc as $key => $value)
+    @foreach($data as $key => $value)
     <tr>
-        <td>{{$key++}}</td>
+        <td>{{$key+1}}</td>
         <td>{{$value->name}}</td>
         <td>{{$value->slug}}</td>
         <td>
@@ -58,6 +66,7 @@
     </tr>
     @endforeach
 </table>
+
 
 </body>
 </html>

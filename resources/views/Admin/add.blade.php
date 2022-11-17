@@ -32,13 +32,14 @@
 <body>
 
 <h1>A Fancy Table</h1>
-<form method="post" action="{{route('category.store')}}">
+<form method="post" action="{{route('category.store')}}" enctype="multipart/form-data">
     @csrf
 <table id="customers">
     <tr>
         <th>Số thứ tự</th>
         <th>Tên danh mục</th>
         <th>Slug</th>
+        <th>Image</th>
         <th>Action</th>
     </tr>
 
@@ -48,6 +49,8 @@
         </td>
         <td><input type="text" name="name">Tên </td>
         <td><input type="text" name="slug">Slug</td>
+        <td><input type="file" name="image">Image</td>
+
        
         <td>
             

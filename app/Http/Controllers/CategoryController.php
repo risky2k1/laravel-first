@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Faker\Provider\File;
+use Illuminate\Http\File as HttpFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -12,10 +16,16 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $danhmuc = Category::all();
-        return view('admin.category', compact('danhmuc'));
+        $search = $request->get('search');
+
+        $data = Category::query()->where('name','like','%'. $search.'%')->get();
+
+        return view('admin.category', [
+            'data'=>$data,
+        ]);
+
     }
 
     /**
@@ -30,15 +40,43 @@ class CategoryController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     * @param  int  $id
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Responses
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
+        // dd($request);
+        // dd($category);
+        $request->validate([
+            'name' => 'required' . $id,
+            'image' => 'image|mimes:png,jpg,jpeg',
+        ], [
+            'name.required' => 'Ten ko dk de trong',
+            'image.image' => 'Anh ko dk de trong',
+        ]);
+
         $category = new Category();
         $category->name = $request->name;
         $category->slug = $request->slug;
+        // $category->save();
+        // return redirect()->route('category.index');
+
+        if (($request)->hasFile('image')) {
+            //Get file
+            $file = $request->file('image');
+            //GEt ten file
+            $filename = time() . '_' . $file->getClientOriginalName();
+            //Duong dan upload file
+            $path_upload = 'storage/category/';
+            // dd($path_upload);
+            // $request->$file('image')->move($path_upload, $filename);
+            // $category->image = $path_upload . $filename;
+
+            Storage::move($path_upload, $filename);
+            $category->image = $path_upload . $filename;
+            // dd($category);
+        }
         $category->save();
         return redirect()->route('category.index');
     }
@@ -57,7 +95,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-   
+
      */
     public function edit(Category $category)
     {
