@@ -32,6 +32,15 @@
 <body>
 
 <h1>A Fancy Table</h1>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <form method="post" action="{{route('category.update',$category)}}">
     @csrf
     @method('PUT')
@@ -49,9 +58,9 @@
         </td>
         <td><input type="text" name="name" value="{{$category->name}}">Tên </td>
         <td><input type="text" name="slug" value="{{$category->slug}}">Slug</td>
-       
+
         <td>
-            
+
             <button type="submit" class="btn btn-primary">Execute</button>
         </td>
 

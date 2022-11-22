@@ -16,9 +16,13 @@
             padding: 8px;
         }
 
-        #customers tr:nth-child(even){background-color: #f2f2f2;}
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
 
-        #customers tr:hover {background-color: #ddd;}
+        #customers tr:hover {
+            background-color: #ddd;
+        }
 
         #customers th {
             padding-top: 12px;
@@ -33,11 +37,11 @@
 <body>
 
 <h1>A Fancy Table</h1>
-<a href="{{route('category.create')}}" class="btn btn-primary" >Add</a>
+<a href="{{route('category.create')}}" class="btn btn-primary">Add</a>
 <caption>
     <form>
         Search
-        <input type="text" name="search" placeholder="Search">
+                <input type="text" name="search" placeholder="Search" value="{{$search}}">
 
     </form>
 </caption>
@@ -45,28 +49,28 @@
     <tr>
         <th>Số thứ tự</th>
         <th>Tên danh mục</th>
-        <th>Slug</th>
+        <th>Loại danh mục</th>
         <th>Action</th>
     </tr>
     @foreach($data as $key => $value)
-    <tr>
-        <td>{{$key+1}}</td>
-        <td>{{$value->name}}</td>
-        <td>{{$value->slug}}</td>
-        <td>
-            {{-- <a href="{{route('category.edit',$value)}}" class="btn btn-primary" >Edit</a> --}}
-            <a href="{{route('category.edit',$value)}}" class="btn btn-primary">Edit</a>
-            <form action="{{route('category.destroy',$value)}}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-primary">Delete</button>
-            </form>
-        </td>
+        {{--        {{dd($data)}}--}}
+        <tr>
+            <td>{{$key+1}}</td>
+            <td>{{$value->name}}</td>
+            <td> {{$value->parent_id ? @$value->parent->name : 'danh muc cha'}}</td>
+            <td>
+                <a href="{{route('category.edit',$value)}}" class="btn btn-primary">Edit</a>
+                <form action="{{route('category.destroy',$value)}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-primary">Delete</button>
+                </form>
+            </td>
 
-    </tr>
+        </tr>
     @endforeach
 </table>
-
+{{$data->links()}}
 
 </body>
 </html>
