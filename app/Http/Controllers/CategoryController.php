@@ -49,6 +49,12 @@ class CategoryController extends Controller
 
 
 
+
+    }
+
+    public function api()
+    {
+        return view('admin.category');
     }
 
     /**

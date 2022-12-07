@@ -32,6 +32,7 @@
   <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker-bs3.css') }}">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+    @stack('css')
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -337,11 +338,14 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
           <li class="header">MAIN NAVIGATION</li>
-          
+
           <li>
             <a href="{{route('category.index')}}"><i class="fa fa-book"></i> <span>Danh Mục</span></a>
           </li>
 
+            <li>
+                <a href="{{route('product.index')}}"><i class="fa fa-book"></i> <span>Quarn lý sản phẩm</span></a>
+            </li>
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -569,7 +573,7 @@
     <div class="control-sidebar-bg"></div>
   </div>
   <!-- ./wrapper -->
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <!-- jQuery 2.2.0 -->
   <script src="plugins/jQuery/jQuery-2.2.0.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
@@ -607,6 +611,7 @@
   <script src="dist/js/pages/dashboard.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="dist/js/demo.js"></script>
+@stack('js')
 </body>
 
 </html>

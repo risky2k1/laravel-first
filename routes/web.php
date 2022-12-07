@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
@@ -18,7 +20,20 @@ use App\Http\Controllers\CategoryController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('category',CategoryController::class)->except(['show']);
+Route::resource('admin/category',CategoryController::class)->except(['show']);
+
+//Route::get('category/api',[CategoryController::class,'api'])->name('category.api');
+
+Route::resource('admin/product',ProductController::class)->except(['show']);
+
+Route::group([
+    'as'     => 'admin.',
+    'prefix' => 'admin',
+], static function () {
+    Route::get('/', [LoginController::class, 'formLogin'])->name('index');
+    Route::post('/login', [LoginController::class, 'postLogin'])->name('postlogin');
+    Route::post('/product', [ProductController::class, 'index'])->name('product');
+});
 //Route::group([
 //    'as'     => 'category.',
 //    'prefix' => 'category',

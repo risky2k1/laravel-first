@@ -1,7 +1,7 @@
-@extends('admin.master')
+@extends('Admin.master')
 
 @section('content')
-    <!DOCTYPE html>
+        <!DOCTYPE html>
 <html>
 <head>
     <style>
